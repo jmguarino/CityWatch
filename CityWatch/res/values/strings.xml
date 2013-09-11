@@ -4,5 +4,9 @@
     <string name="app_name">CityWatch</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="report">Report Issue</string>
+    <string name="kudos">Give Kudos</string>
+    <string name="volunteer">Volunteer</string>
+    <color name="purple">#ADD8E6</color>
 
 </resources>
