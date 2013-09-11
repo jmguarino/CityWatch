@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jgnetworks.net.citywatch"
+<manifest package="jgnetworks.net.citywatch"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -15,13 +14,22 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="jgnetworks.net.citywatch.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name="jgnetworks.net.citywatch.Report"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <activity 
+            android:name="jgnetworks.net.citywatch.Settings"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
     </application>
 
 </manifest>

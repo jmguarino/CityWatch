@@ -11,6 +11,12 @@
     <string name="set_location">Set Location</string>
     <string name="title">CityWatch</string>
     <string name="dept_info">Department Info</string>
+    <string name="call">Call</string>
+    <string name="email">Email</string>
+    <string name="enter_name">Please Enter Name:</string>
+    <string name="enter_tn">Please Enter Telephone Number</string>
+    <string name="enter_email">Please Enter Email</string>
+    <string name="enter_preset_address">Create Preset Address</string>
     
     
     

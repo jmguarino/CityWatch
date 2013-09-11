@@ -49,5 +49,33 @@
         android:textColor="@color/royal_blue"
         android:textSize="24sp" />
 
+    <Button
+        android:id="@+id/call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="72dp"
+        android:layout_toLeftOf="@+id/title"
+        android:text="@string/call" />
+
+    <Button
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/call"
+        android:layout_alignBottom="@+id/call"
+        android:layout_toRightOf="@+id/title"
+        android:text="@string/email" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/call"
+        android:layout_below="@+id/dept_info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp" >
+
+    </ListView>
 
 </RelativeLayout>
