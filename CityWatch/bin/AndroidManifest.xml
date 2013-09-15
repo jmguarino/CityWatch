@@ -39,6 +39,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="grouplogic.citywatch.MainActivity" />
         </activity>
+        <activity
+            android:name="grouplogic.citywatch.Volunteer"
+            android:label="@string/title_activity_volunteer" >
+        </activity>
     </application>
 
 </manifest>

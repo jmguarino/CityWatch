@@ -23,5 +23,6 @@
     <color name="royal_blue">#4169E1</color>
 
     <string name="title_activity_kudos">Kudos</string>
+    <string name="title_activity_volunteer">Volunteer</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package grouplogic.citywatch;
 
-import grouplogic.citywatch.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,15 +20,25 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
+
     public void openReport(View view) {
-    	Intent intent = new Intent(this, Report.class);
-    	startActivity(intent);
+        Intent intent = new Intent(this, Report.class);
+        startActivity(intent);
     }
-    
+
     public void openSettings(View view) {
-    	Intent intent = new Intent(this, Settings.class);
-    	startActivity(intent);
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+    }
+
+    public void openKudos(View view) {
+        Intent intent = new Intent(this, Kudos.class);
+        startActivity(intent);
+    }
+
+    public void openVolunteer(View view) {
+        Intent intent = new Intent(this, Volunteer.class);
+        startActivity(intent);
     }
 
 }

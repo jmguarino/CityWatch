@@ -28,7 +28,8 @@
         android:layout_above="@+id/volunteer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
-        android:text="@string/kudos" />
+        android:text="@string/kudos"
+        android:onClick="openKudos" />
 
     <Button
         android:id="@+id/volunteer"
@@ -36,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/volunteer" />
+        android:text="@string/volunteer"
+        android:onClick="openVolunteer" />
 
     <Button
         android:id="@+id/report"
