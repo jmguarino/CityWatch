@@ -1,5 +1,6 @@
-package jgnetworks.net.citywatch;
+package grouplogic.citywatch;
 
+import grouplogic.citywatch.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        //Loads settings activity
         settings.setOnClickListener(new View.OnClickListener() {
             Intent myIntent = new Intent(MainActivity.this, Settings.class);
             @Override
