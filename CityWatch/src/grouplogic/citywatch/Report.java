@@ -1,10 +1,14 @@
 package grouplogic.citywatch;
 
-import grouplogic.citywatch.R;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 public class Report extends Activity {
+
+    private ProgressDialog pDialog;
+
+    JSONParser jParser = new JSONParser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -43,6 +43,17 @@
             android:name="grouplogic.citywatch.Volunteer"
             android:label="@string/title_activity_volunteer" >
         </activity>
+        <activity
+            android:name="grouplogic.citywatch.ListAllAgencies"
+            android:label="@string/title_activity_list_all_agencies"
+            android:parentActivityName="grouplogic.citywatch.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="grouplogic.citywatch.MainActivity" />
+        </activity>
     </application>
+
+    <!-- Internet Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -61,4 +61,13 @@
         android:textColor="@color/navy"
         android:textSize="32sp" />
 
+    <Button
+        android:id="@+id/listAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/settings"
+        android:layout_toLeftOf="@+id/volunteer"
+        android:onClick="openAllAgencies"
+        android:text="@string/listAll" />
+
 </RelativeLayout>

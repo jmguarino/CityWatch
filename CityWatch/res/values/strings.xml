@@ -24,5 +24,7 @@
 
     <string name="title_activity_kudos">Kudos</string>
     <string name="title_activity_volunteer">Volunteer</string>
+    <string name="title_activity_list_all_agencies">ListAllAgencies</string>
+    <string name="listAll">ListAll(DEV)</string>
 
 </resources>

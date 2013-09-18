@@ -41,4 +41,9 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void openAllAgencies(View view) {
+        Intent intent = new Intent(this, ListAllAgencies.class);
+        startActivity(intent);
+    }
+
 }
