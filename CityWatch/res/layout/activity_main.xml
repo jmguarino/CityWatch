@@ -70,4 +70,14 @@
         android:onClick="openAllAgencies"
         android:text="@string/listAll" />
 
+    <Button
+        android:id="@+id/getLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/kudos"
+        android:layout_below="@+id/volunteer"
+        android:layout_marginTop="26dp"
+        android:onClick="openLocation"
+        android:text="@string/getLocation" />
+
 </RelativeLayout>

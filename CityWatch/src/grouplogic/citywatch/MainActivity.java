@@ -45,5 +45,10 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, ListAllAgencies.class);
         startActivity(intent);
     }
+    
+    public void openLocation(View view) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
 
 }
