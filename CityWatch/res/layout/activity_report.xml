@@ -25,19 +25,10 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/issueView"
         android:layout_below="@+id/title"
         android:layout_toLeftOf="@+id/title"
         android:text="@string/get_location" />
-
-    <Button
-        android:id="@+id/set_location"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/get_location"
-        android:layout_alignBottom="@+id/get_location"
-        android:layout_toRightOf="@+id/title"
-        android:text="@string/set_location" />
 
     <TextView
         android:id="@+id/dept_info"
@@ -50,32 +41,48 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="72dp"
-        android:layout_toLeftOf="@+id/title"
-        android:text="@string/call" />
-
-    <Button
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/call"
         android:layout_alignBottom="@+id/call"
-        android:layout_toRightOf="@+id/title"
         android:text="@string/email" />
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/issueView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/call"
-        android:layout_below="@+id/dept_info"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp" >
-
+        android:layout_below="@+id/dept_info" >
     </ListView>
+
+    <Spinner
+        android:id="@+id/setLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dept_info"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/issueView"
+        android:layout_below="@+id/title" />
+
+    <Button
+        android:id="@+id/call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/issueView"
+        android:layout_marginBottom="32dp"
+        android:text="@string/call" />
+
+    <TextView
+        android:id="@+id/deptInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/email"
+        android:layout_alignLeft="@+id/dept_info"
+        android:layout_alignTop="@+id/email"
+        android:layout_toLeftOf="@+id/call"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
 </RelativeLayout>
