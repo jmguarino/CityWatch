@@ -46,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/call"
         android:layout_alignBottom="@+id/call"
-        android:text="@string/email" />
+        android:text="@string/email"
+        android:onClick="sendEmail" />
 
     <ListView
         android:id="@+id/issueView"

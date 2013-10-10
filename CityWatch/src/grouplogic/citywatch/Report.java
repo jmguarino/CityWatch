@@ -67,6 +67,7 @@ public class Report extends ListActivity{
     String pid = "1";
     String location;
     String TelNum;
+    String eMail;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,14 @@ public class Report extends ListActivity{
 	public void callNum(View view) {
 		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(TelNum));
 		startActivity(intent);
+	}
+	
+	public void sendEmail(View view) {
+		Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(eMail));
+		intent.putExtra(Intent.EXTRA_SUBJECT, "Some Subject");
+		intent.putExtra(Intent.EXTRA_TEXT,  "Hello, I have a complaint.");
+		
+		startActivity(Intent.createChooser(intent,  "Send Email"));
 	}
 
     public void addItemsOnSpinner() {
@@ -305,6 +314,7 @@ public class Report extends ListActivity{
                         map.put(TAG_TN, TN);
                         TelNum = "tel:" + TN;
                         map.put(TAG_EMAIL, Email);
+                        eMail = "mailto:" + Email;
                         map.put(TAG_ISSUES, Issues);
                         map.put(TAG_LOCATION, Location);
 
