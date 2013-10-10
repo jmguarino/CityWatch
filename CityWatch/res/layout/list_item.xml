@@ -19,7 +19,8 @@
         android:paddingTop="6dip"
         android:paddingLeft="6dip"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:textColor="#000000"/>
     
     <TextView
         android:id="@+id/TN"
@@ -28,7 +29,8 @@
         android:paddingTop="6dip"
         android:paddingLeft="6dip"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:textColor="#000000"/>
     
     <TextView
         android:id="@+id/Email"
@@ -37,6 +39,7 @@
         android:paddingTop="6dip"
         android:paddingLeft="6dip"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#000000" />
  
 </LinearLayout>

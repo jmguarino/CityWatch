@@ -64,6 +64,16 @@
         android:layout_alignLeft="@+id/title"
         android:layout_alignRight="@+id/issueView"
         android:layout_below="@+id/title" />
+    
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dept_info"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/email"
+        android:layout_toLeftOf="@+id/call"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/call"
@@ -71,18 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/issueView"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="126dp"
         android:text="@string/call" />
-
-    <TextView
-        android:id="@+id/deptInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/email"
-        android:layout_alignLeft="@+id/dept_info"
-        android:layout_alignTop="@+id/email"
-        android:layout_toLeftOf="@+id/call"
-        android:textColor="#000000"
-        android:textSize="18sp" />
 
 </RelativeLayout>

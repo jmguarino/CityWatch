@@ -1,5 +1,7 @@
 package grouplogic.citywatch;
 
+import grouplogic.citywatch.ListAllAgencies.LoadAllAgencies;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.app.ListActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -18,22 +22,27 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Report extends Activity {
+public class Report extends ListActivity{
     TextView deptInfo;
 
     private ProgressDialog pDialog;
 
     JSONParser jParser = new JSONParser();
 
-    private static final String url_get_agency =
-            "http://jgnetworks.net/citywatch/php/db_read.php";
+    private static String url_all_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_sr.php";
+    private static String url_rp_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_rp.php";
+    private static String url_cot_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_cot.php";
+    private static String url_sr_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_sr.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -46,22 +55,20 @@ public class Report extends Activity {
     private static final String TAG_LOCATION = "Location";
 
     List<Map<String, String>> issueList = new ArrayList<Map<String, String>>();
-
+    
+    JSONArray agencies = null;
+    ArrayList<HashMap<String, String>> agenciesList;
+    
     private Spinner setLoc;
 
     int issueNum = 0;
     String pid = "1";
     String location;
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
-        //Remove this at some point!
-        StrictMode.ThreadPolicy policy = new StrictMode.
-                ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
         initList();
         addItemsOnSpinner();
@@ -72,9 +79,7 @@ public class Report extends Activity {
                 new int[] {R.id.issue});
 
         lv.setAdapter(simpleAdpt);
-
-        // Loading agencies in Background Thread
-        new GetAgencyDetails().execute();
+        
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,12 +89,32 @@ public class Report extends Activity {
                 TextView clickedView = (TextView) ll.findViewById(R.id.issue);
                 issueNum=position;
                 pid=Integer.toString(issueNum);
-                new GetAgencyDetails().execute();
-                /*Toast.makeText(Report.this, "Item with id ["+id+"] - Position [" +
-                        position+"] - Issue ["
-                        +clickedView.getText()+"]", Toast.LENGTH_SHORT).show();*/
+                new LoadAllAgencies().execute();
             }
         });
+        
+        setLoc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                    int pos, long id) {
+                if(pos==0){
+                	url_all_agencies = url_sr_agencies;
+                }
+                if(pos==1){
+                	url_all_agencies = url_cot_agencies;
+                }
+                if(pos==2){
+                	url_all_agencies = url_rp_agencies;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }});
+        
     }
 
     public void addItemsOnSpinner() {
@@ -128,18 +153,18 @@ public class Report extends Activity {
         return true;
     }*/
 
-    /**
+ /*   /**
      * Background Async Task to Get complete agency details
      **/
 
-    class GetAgencyDetails extends AsyncTask<String, String, String> {
+ /*   class GetAgencyDetails extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Dialog
          **/
         //    @Override
-        @Override
-        protected void onPreExecute() {
+ //       @Override
+ /*       protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(Report.this);
             pDialog.setMessage("Loading agency details. Please wait...");
@@ -151,7 +176,7 @@ public class Report extends Activity {
         /**
          * Getting agency details in background thread
          * */
-        @Override
+ /*       @Override
         protected String doInBackground(String... params) {
 
             // updating UI from Background Thread
@@ -204,11 +229,120 @@ public class Report extends Activity {
         /**
          * After completing background task Dismiss the progress dialog
          * **/
-        @Override
+/*        @Override
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all details
             pDialog.dismiss();
         }
+    }*/
+    
+    /**
+     * Background Async Task to Load all product by making HTTP Request
+     * */
+    class LoadAllAgencies extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Report.this);
+            pDialog.setMessage("Loading agencies. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        /**
+         * getting All agencies from url
+         * */
+        @Override
+        protected String doInBackground(String... args) {
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            // getting JSON string from URL
+            JSONObject json = jParser.makeHttpRequest(url_all_agencies, "GET", params);
+
+            // Check your log cat for JSON reponse
+            Log.d("All Agencies: ", json.toString());
+
+            try {
+                // Checking for SUCCESS TAG
+                int success = json.getInt(TAG_SUCCESS);
+
+                if (success == 1) {
+                    // agencies found
+                    // Getting Array of Agencies
+                    agencies = json.getJSONArray(TAG_AGENCIES);
+
+                    // looping through All agencies
+                   // for (int i = 0; i < agencies.length(); i++) {
+                        JSONObject c = agencies.getJSONObject(issueNum);
+
+                        // Storing each json item in variable
+                        String id = c.getString(TAG_PID);
+                        String dept = c.getString(TAG_DEPT);
+                        String TN = c.getString(TAG_TN);
+                        String Email = c.getString(TAG_EMAIL);
+                        String Issues = c.getString(TAG_ISSUES);
+                        String Location = c.getString(TAG_LOCATION);
+
+                        // creating new HashMap
+                        HashMap<String, String> map = new HashMap<String, String>();
+
+                        // adding each child node to HashMap key => value
+                        map.put(TAG_PID, id);
+                        map.put(TAG_DEPT, dept);
+                        map.put(TAG_TN, TN);
+                        map.put(TAG_EMAIL, Email);
+                        map.put(TAG_ISSUES, Issues);
+                        map.put(TAG_LOCATION, Location);
+
+                        // adding HashList to ArrayList
+                        agenciesList = new ArrayList<HashMap<String, String>>();
+                        agenciesList.add(map);
+                   // }
+                } else {
+                    // no agencies found
+                    // Launch Add New product Activity
+                    Toast.makeText(getApplicationContext(),
+                            "No Agencies found.", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        @Override
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after getting all agencies
+            pDialog.dismiss();
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    /**
+                     * Updating parsed JSON data into ListView
+                     * */
+                    ListAdapter adapter = new SimpleAdapter(
+                            Report.this, agenciesList,
+                            R.layout.list_item, new String[] { TAG_PID,
+                                    TAG_DEPT, TAG_TN, TAG_EMAIL},
+                                    new int[] { R.id.pid, R.id.dept, R.id.TN,
+                                    R.id.Email});
+                    // updating listview
+                    setListAdapter(adapter);
+                }
+            });
+
+        }
+
     }
 
 }
