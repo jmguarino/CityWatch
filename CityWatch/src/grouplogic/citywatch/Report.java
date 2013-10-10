@@ -16,6 +16,8 @@ import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -64,6 +66,7 @@ public class Report extends ListActivity{
     int issueNum = 0;
     String pid = "1";
     String location;
+    String TelNum;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,11 @@ public class Report extends ListActivity{
             }});
         
     }
+	
+	public void callNum(View view) {
+		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(TelNum));
+		startActivity(intent);
+	}
 
     public void addItemsOnSpinner() {
         setLoc = (Spinner) findViewById(R.id.setLoc);
@@ -295,6 +303,7 @@ public class Report extends ListActivity{
                         map.put(TAG_PID, id);
                         map.put(TAG_DEPT, dept);
                         map.put(TAG_TN, TN);
+                        TelNum = "tel:" + TN;
                         map.put(TAG_EMAIL, Email);
                         map.put(TAG_ISSUES, Issues);
                         map.put(TAG_LOCATION, Location);

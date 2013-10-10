@@ -82,6 +82,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/issueView"
         android:layout_marginBottom="126dp"
-        android:text="@string/call" />
+        android:text="@string/call"
+        android:onClick="callNum" />
 
 </RelativeLayout>
