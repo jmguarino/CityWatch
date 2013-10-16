@@ -20,7 +20,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -71,8 +73,33 @@ public class ListAllAgencies extends ListActivity{
 
         initList();
         addItemsOnSpinner();
+
+
+        //
         agenciesList = new ArrayList<HashMap<String, String>>();
-        //new LoadAllAgencies().execute();
+
+        ListView lv = getListView();
+
+        SimpleAdapter simpleAdpt = new SimpleAdapter(this, issueList,
+                R.layout.listview_item, new String[]{"issue"},
+                new int[] {R.id.issue});
+
+        lv.setAdapter(simpleAdpt);
+
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parentAdapter, View view,
+                    int position, long id) {
+                LinearLayout ll = (LinearLayout) view;
+                TextView clickedView = (TextView) ll.findViewById(R.id.issue);
+                issueNum=position;
+                pid=Integer.toString(issueNum);
+                agenciesList = new ArrayList<HashMap<String, String>>();
+                new LoadAllAgencies().execute();
+            }
+        });
+        //
 
         setLoc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
 
@@ -192,6 +219,11 @@ public class ListAllAgencies extends ListActivity{
                     // agencies found
                     // Getting Array of Agencies
                     agencies = json.getJSONArray(TAG_AGENCIES);
+                    JSONObject selected = agencies.getJSONObject(issueNum);
+                    String selTN = selected.getString(TAG_TN);
+                    String selEmail = selected.getString(TAG_EMAIL);
+                    eMail = "mailto:" + selEmail;
+                    TelNum = "tel:" + selTN;
 
                     // looping through All agencies
                     for (int i = 0; i < agencies.length(); i++) {
@@ -221,9 +253,7 @@ public class ListAllAgencies extends ListActivity{
                             map.put(TAG_PID, id);
                             map.put(TAG_DEPT, dept);
                             map.put(TAG_TN, TN);
-                            TelNum = "tel:" + TN;
                             map.put(TAG_EMAIL, Email);
-                            eMail = "mailto:" + Email;
                             map.put(TAG_ISSUES, Issues);
                             map.put(TAG_LOCATION, Location);
 
