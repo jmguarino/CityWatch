@@ -3,6 +3,7 @@ package grouplogic.citywatch;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
@@ -11,26 +12,34 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class ListAllAgencies extends ListActivity {
+public class ListAllAgencies extends ListActivity{
+    TextView deptInfo;
 
-    // Progress Dialog
     private ProgressDialog pDialog;
 
-    // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
-    ArrayList<HashMap<String, String>> agenciesList;
-
-    // url to get all agencies list
-    private static String url_all_agencies = "http://jgnetworks.net/citywatch/php/db_read_all.php";
+    private static String url_sr_agencies  =
+            "http://jgnetworks.net/citywatch/php/db_read_all_sr.php";
+    private static String url_rp_agencies =
+            "http://jgnetworks.net/citywatch/php/db_read_all_rp.php";
+    private static String url_cot_agencies =
+            "http://jgnetworks.net/citywatch/php/db_read_all_cot.php";
+    private static String url_all_agencies = url_sr_agencies;
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -42,64 +51,107 @@ public class ListAllAgencies extends ListActivity {
     private static final String TAG_ISSUES = "Issues";
     private static final String TAG_LOCATION = "Location";
 
-    // agencies JSONArray
+    List<Map<String, String>> issueList = new ArrayList<Map<String, String>>();
+
     JSONArray agencies = null;
+    ArrayList<HashMap<String, String>> agenciesList;
+
+    private Spinner setLoc;
+
+    int issueNum = 0;
+    String pid = "1";
+    String location;
+    String TelNum;
+    String eMail;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_all_agencies);
 
-        // Hashmap for ListView
+        initList();
+        addItemsOnSpinner();
         agenciesList = new ArrayList<HashMap<String, String>>();
+        //new LoadAllAgencies().execute();
 
-        // Loading agencies in Background Thread
-        new LoadAllAgencies().execute();
-
-        // Get listview
-        ListView lv = getListView();
-
-        /*
-        // on seleting single product
-        // launching Edit Product Screen
-        lv.setOnItemClickListener(new OnItemClickListener() {
+        setLoc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-                // getting values from selected ListItem
-                String pid = ((TextView) view.findViewById(R.id.pid)).getText()
-                        .toString();
+            public void onItemSelected(AdapterView<?> parent, View view,
+                    int pos, long id) {
+                if(pos==0){
+                    url_all_agencies = url_sr_agencies;
+                    agenciesList = new ArrayList<HashMap<String, String>>();
+                    new LoadAllAgencies().execute();
+                }
+                if(pos==1){
+                    url_all_agencies = url_cot_agencies;
+                    agenciesList = new ArrayList<HashMap<String, String>>();
+                    new LoadAllAgencies().execute();
+                }
+                if(pos==2){
+                    url_all_agencies = url_rp_agencies;
+                    agenciesList = new ArrayList<HashMap<String, String>>();
+                    new LoadAllAgencies().execute();
+                }
 
-                // Starting new intent
-                Intent in = new Intent(getApplicationContext(),
-                        EditProductActivity.class);
-                // sending pid to next activity
-                in.putExtra(TAG_PID, pid);
-
-                // starting new activity and expecting some response back
-                startActivityForResult(in, 100);
             }
-        });*/
 
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }});
 
     }
-    /*
-    // Response from Edit Product Activity
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // if result code 100
-        if (resultCode == 100) {
-            // if result code 100 is received
-            // means user edited/deleted product
-            // reload this screen again
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
-        }
 
-    } */
+    public void callNum(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(TelNum));
+        startActivity(intent);
+    }
+
+    public void sendEmail(View view) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(eMail));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Some Subject");
+        intent.putExtra(Intent.EXTRA_TEXT,  "Hello, I have a complaint.");
+
+        startActivity(Intent.createChooser(intent,  "Send Email"));
+    }
+
+    public void addItemsOnSpinner() {
+        setLoc = (Spinner) findViewById(R.id.setLoc);
+        List<String> list = new ArrayList<String>();
+        list.add("Santa Rosa");
+        list.add("Cotati");
+        list.add("Rohnert Park");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        setLoc.setAdapter(dataAdapter);
+    }
+
+
+
+    private void initList() {
+        issueList.add(createIssue("issue", "Pothole"));
+        issueList.add(createIssue("issue", "Street Light Out"));
+        issueList.add(createIssue("issue", "Traffic Light Out"));
+    }
+
+    private HashMap<String, String> createIssue(String key, String name) {
+        HashMap<String, String> issue = new HashMap<String, String>();
+        issue.put(key, name);
+
+        return issue;
+    }
+
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.report, menu);
+        return true;
+    }*/
 
     /**
      * Background Async Task to Load all product by making HTTP Request
@@ -145,6 +197,14 @@ public class ListAllAgencies extends ListActivity {
                     for (int i = 0; i < agencies.length(); i++) {
                         JSONObject c = agencies.getJSONObject(i);
 
+                        JSONObject prevc = new JSONObject();
+                        String prevdept = null;
+
+                        if(i>0) {
+                            prevc = agencies.getJSONObject(i-1);
+                            prevdept = prevc.getString(TAG_DEPT);
+                        }
+
                         // Storing each json item in variable
                         String id = c.getString(TAG_PID);
                         String dept = c.getString(TAG_DEPT);
@@ -153,19 +213,23 @@ public class ListAllAgencies extends ListActivity {
                         String Issues = c.getString(TAG_ISSUES);
                         String Location = c.getString(TAG_LOCATION);
 
-                        // creating new HashMap
-                        HashMap<String, String> map = new HashMap<String, String>();
+                        if(!dept.equals(prevdept)){
+                            // creating new HashMap
+                            HashMap<String, String> map = new HashMap<String, String>();
 
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_PID, id);
-                        map.put(TAG_DEPT, dept);
-                        map.put(TAG_TN, TN);
-                        map.put(TAG_EMAIL, Email);
-                        map.put(TAG_ISSUES, Issues);
-                        map.put(TAG_LOCATION, Location);
+                            // adding each child node to HashMap key => value
+                            map.put(TAG_PID, id);
+                            map.put(TAG_DEPT, dept);
+                            map.put(TAG_TN, TN);
+                            TelNum = "tel:" + TN;
+                            map.put(TAG_EMAIL, Email);
+                            eMail = "mailto:" + Email;
+                            map.put(TAG_ISSUES, Issues);
+                            map.put(TAG_LOCATION, Location);
 
-                        // adding HashList to ArrayList
-                        agenciesList.add(map);
+                            // adding HashList to ArrayList
+                            agenciesList.add(map);
+                        }
                     }
                 } else {
                     // no agencies found
@@ -208,4 +272,6 @@ public class ListAllAgencies extends ListActivity {
         }
 
     }
+
 }
+

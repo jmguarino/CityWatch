@@ -1,7 +1,5 @@
 package grouplogic.citywatch;
 
-import grouplogic.citywatch.ListAllAgencies.LoadAllAgencies;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,19 +10,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.app.ListActivity;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -41,10 +35,13 @@ public class Report extends ListActivity{
 
     JSONParser jParser = new JSONParser();
 
-    private static String url_all_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_sr.php";
-    private static String url_rp_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_rp.php";
-    private static String url_cot_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_cot.php";
-    private static String url_sr_agencies = "http://jgnetworks.net/citywatch/php/db_read_all_sr.php";
+    private static String url_sr_agencies  =
+            "http://jgnetworks.net/citywatch/php/db_read_all_sr.php";
+    private static String url_rp_agencies =
+            "http://jgnetworks.net/citywatch/php/db_read_all_rp.php";
+    private static String url_cot_agencies =
+            "http://jgnetworks.net/citywatch/php/db_read_all_cot.php";
+    private static String url_all_agencies = url_sr_agencies;
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -57,10 +54,10 @@ public class Report extends ListActivity{
     private static final String TAG_LOCATION = "Location";
 
     List<Map<String, String>> issueList = new ArrayList<Map<String, String>>();
-    
+
     JSONArray agencies = null;
     ArrayList<HashMap<String, String>> agenciesList;
-    
+
     private Spinner setLoc;
 
     int issueNum = 0;
@@ -69,7 +66,7 @@ public class Report extends ListActivity{
     String TelNum;
     String eMail;
 
-	@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
@@ -83,7 +80,7 @@ public class Report extends ListActivity{
                 new int[] {R.id.issue});
 
         lv.setAdapter(simpleAdpt);
-        
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,20 +93,20 @@ public class Report extends ListActivity{
                 new LoadAllAgencies().execute();
             }
         });
-        
+
         setLoc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id) {
                 if(pos==0){
-                	url_all_agencies = url_sr_agencies;
+                    url_all_agencies = url_sr_agencies;
                 }
                 if(pos==1){
-                	url_all_agencies = url_cot_agencies;
+                    url_all_agencies = url_cot_agencies;
                 }
                 if(pos==2){
-                	url_all_agencies = url_rp_agencies;
+                    url_all_agencies = url_rp_agencies;
                 }
 
             }
@@ -118,21 +115,21 @@ public class Report extends ListActivity{
             public void onNothingSelected(AdapterView<?> arg0) {
 
             }});
-        
+
     }
-	
-	public void callNum(View view) {
-		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(TelNum));
-		startActivity(intent);
-	}
-	
-	public void sendEmail(View view) {
-		Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(eMail));
-		intent.putExtra(Intent.EXTRA_SUBJECT, "Some Subject");
-		intent.putExtra(Intent.EXTRA_TEXT,  "Hello, I have a complaint.");
-		
-		startActivity(Intent.createChooser(intent,  "Send Email"));
-	}
+
+    public void callNum(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(TelNum));
+        startActivity(intent);
+    }
+
+    public void sendEmail(View view) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(eMail));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Some Subject");
+        intent.putExtra(Intent.EXTRA_TEXT,  "Hello, I have a complaint.");
+
+        startActivity(Intent.createChooser(intent,  "Send Email"));
+    }
 
     public void addItemsOnSpinner() {
         setLoc = (Spinner) findViewById(R.id.setLoc);
@@ -170,89 +167,6 @@ public class Report extends ListActivity{
         return true;
     }*/
 
- /*   /**
-     * Background Async Task to Get complete agency details
-     **/
-
- /*   class GetAgencyDetails extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         **/
-        //    @Override
- //       @Override
- /*       protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(Report.this);
-            pDialog.setMessage("Loading agency details. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        /**
-         * Getting agency details in background thread
-         * */
- /*       @Override
-        protected String doInBackground(String... params) {
-
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // Check for success tag
-                    int success;
-                    try {
-                        // Building Parameters
-                        List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        //Something is broken here params.add(new BasicNameValuePair("pid", pid));
-
-                        // getting agency details by making HTTP request
-                        // Note that agency details url will use GET request
-                        JSONObject json = jParser.makeHttpRequest(
-                                url_get_agency, "GET", params);
-
-                        // check your log for json response
-                        Log.d("Single agency Details", json.toString());
-
-                        // json success tag
-                        success = json.getInt(TAG_SUCCESS);
-                        if (success == 1) {
-                            // successfully received agency details
-                            JSONArray agencyObj = json
-                                    .getJSONArray(TAG_AGENCIES); // JSON Array
-
-                            // get agency object from JSON Array
-                            JSONObject agency = agencyObj.getJSONObject(0);
-
-                            // agency with this id found
-                            // Edit Text
-                            deptInfo = (TextView) findViewById(R.id.deptInfo);
-                            // display agency data in TextView
-                            deptInfo.setText(agency.getString(TAG_DEPT));
-
-                        }else{
-                            // agency with id not found
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-/*        @Override
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once got all details
-            pDialog.dismiss();
-        }
-    }*/
-    
     /**
      * Background Async Task to Load all product by making HTTP Request
      * */
@@ -293,35 +207,34 @@ public class Report extends ListActivity{
                     // Getting Array of Agencies
                     agencies = json.getJSONArray(TAG_AGENCIES);
 
-                    // looping through All agencies
-                   // for (int i = 0; i < agencies.length(); i++) {
-                        JSONObject c = agencies.getJSONObject(issueNum);
+                    // get
+                    JSONObject c = agencies.getJSONObject(issueNum);
 
-                        // Storing each json item in variable
-                        String id = c.getString(TAG_PID);
-                        String dept = c.getString(TAG_DEPT);
-                        String TN = c.getString(TAG_TN);
-                        String Email = c.getString(TAG_EMAIL);
-                        String Issues = c.getString(TAG_ISSUES);
-                        String Location = c.getString(TAG_LOCATION);
+                    // Storing each json item in variable
+                    String id = c.getString(TAG_PID);
+                    String dept = c.getString(TAG_DEPT);
+                    String TN = c.getString(TAG_TN);
+                    String Email = c.getString(TAG_EMAIL);
+                    String Issues = c.getString(TAG_ISSUES);
+                    String Location = c.getString(TAG_LOCATION);
 
-                        // creating new HashMap
-                        HashMap<String, String> map = new HashMap<String, String>();
+                    // creating new HashMap
+                    HashMap<String, String> map = new HashMap<String, String>();
 
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_PID, id);
-                        map.put(TAG_DEPT, dept);
-                        map.put(TAG_TN, TN);
-                        TelNum = "tel:" + TN;
-                        map.put(TAG_EMAIL, Email);
-                        eMail = "mailto:" + Email;
-                        map.put(TAG_ISSUES, Issues);
-                        map.put(TAG_LOCATION, Location);
+                    // adding each child node to HashMap key => value
+                    map.put(TAG_PID, id);
+                    map.put(TAG_DEPT, dept);
+                    map.put(TAG_TN, TN);
+                    TelNum = "tel:" + TN;
+                    map.put(TAG_EMAIL, Email);
+                    eMail = "mailto:" + Email;
+                    map.put(TAG_ISSUES, Issues);
+                    map.put(TAG_LOCATION, Location);
 
-                        // adding HashList to ArrayList
-                        agenciesList = new ArrayList<HashMap<String, String>>();
-                        agenciesList.add(map);
-                   // }
+                    // adding HashList to ArrayList
+                    agenciesList = new ArrayList<HashMap<String, String>>();
+                    agenciesList.add(map);
+                    // }
                 } else {
                     // no agencies found
                     // Launch Add New product Activity
