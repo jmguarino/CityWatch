@@ -20,7 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -63,8 +63,6 @@ public class Report extends ListActivity{
     int issueNum = 0;
     String pid = "1";
     String location;
-    String TelNum;
-    String eMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +84,8 @@ public class Report extends ListActivity{
             @Override
             public void onItemClick(AdapterView<?> parentAdapter, View view,
                     int position, long id) {
-                LinearLayout ll = (LinearLayout) view;
-                TextView clickedView = (TextView) ll.findViewById(R.id.issue);
+                //LinearLayout ll = (LinearLayout) view;
+                //TextView clickedView = (TextView) ll.findViewById(R.id.issue);
                 issueNum=position;
                 pid=Integer.toString(issueNum);
                 new LoadAllAgencies().execute();
@@ -119,16 +117,17 @@ public class Report extends ListActivity{
     }
 
     public void callNum(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(TelNum));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + agenciesList.get(0).get(TAG_TN)));
         startActivity(intent);
     }
 
-    public void sendEmail(View view) {
-        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(eMail));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Some Subject");
-        intent.putExtra(Intent.EXTRA_TEXT,  "Hello, I have a complaint.");
+    public void editEmail(View view) {
+        Intent intent = new Intent(this, EmailEditor.class);
+        intent.putExtra("emailAddress", agenciesList.get(0).get(TAG_EMAIL));
+        intent.putExtra("sendTo", agenciesList.get(0).get(TAG_DEPT));
+        intent.putExtra("issue",  agenciesList.get(0).get(TAG_ISSUES));
 
-        startActivity(Intent.createChooser(intent,  "Send Email"));
+        startActivity(intent);
     }
 
     public void addItemsOnSpinner() {
@@ -225,9 +224,7 @@ public class Report extends ListActivity{
                     map.put(TAG_PID, id);
                     map.put(TAG_DEPT, dept);
                     map.put(TAG_TN, TN);
-                    TelNum = "tel:" + TN;
                     map.put(TAG_EMAIL, Email);
-                    eMail = "mailto:" + Email;
                     map.put(TAG_ISSUES, Issues);
                     map.put(TAG_LOCATION, Location);
 
@@ -270,6 +267,10 @@ public class Report extends ListActivity{
                                     R.id.Email});
                     // updating listview
                     setListAdapter(adapter);
+                    Button EmailButton = (Button) findViewById(R.id.email);
+                    Button CallButton = (Button) findViewById(R.id.call);
+                    EmailButton.setVisibility(View.VISIBLE);
+                    CallButton.setVisibility(View.VISIBLE);
                 }
             });
 

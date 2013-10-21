@@ -42,12 +42,13 @@
 
     <Button
         android:id="@+id/email"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/call"
         android:layout_alignBottom="@+id/call"
         android:text="@string/email"
-        android:onClick="sendEmail" />
+        android:onClick="editEmail" />
 
     <ListView
         android:id="@+id/issueView"
@@ -78,6 +79,7 @@
 
     <Button
         android:id="@+id/call"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
