@@ -126,7 +126,8 @@ public class Report extends ListActivity{
         intent.putExtra("emailAddress", agenciesList.get(0).get(TAG_EMAIL));
         intent.putExtra("sendTo", agenciesList.get(0).get(TAG_DEPT));
         intent.putExtra("issue",  agenciesList.get(0).get(TAG_ISSUES));
-
+        intent.putExtra("typeOfReport",  "report");
+        
         startActivity(intent);
     }
 
