@@ -80,5 +80,6 @@
     <string name="title_activity_email">EmailActivity</string>
     <string name="comments_hint">Comments</string>
     <string name="send">Send</string>
+    <color name="orange">#FF9900</color>
 
 </resources>

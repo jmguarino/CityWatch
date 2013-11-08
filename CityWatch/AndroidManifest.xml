@@ -16,11 +16,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="grouplogic.citywatch.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,11 +29,10 @@
         <activity
             android:name="grouplogic.citywatch.Report"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+             />
         <activity
             android:name="grouplogic.citywatch.Settings"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+            android:label="@string/app_name"/>
         <activity
             android:name="grouplogic.citywatch.Kudos"
             android:label="@string/title_activity_kudos"
@@ -71,8 +69,7 @@
 
         <activity
             android:name="grouplogic.citywatch.EmailEditor"
-            android:label="@string/title_activity_email"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:label="@string/title_activity_email">
         </activity>
     </application>
 

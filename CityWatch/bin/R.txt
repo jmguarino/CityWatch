@@ -22,10 +22,11 @@ int color common_signin_btn_light_text_default 0x7f040004
 int color common_signin_btn_light_text_disabled 0x7f040006
 int color common_signin_btn_light_text_focused 0x7f040007
 int color common_signin_btn_light_text_pressed 0x7f040005
-int color common_signin_btn_text_dark 0x7f04000d
-int color common_signin_btn_text_light 0x7f04000e
+int color common_signin_btn_text_dark 0x7f04000e
+int color common_signin_btn_text_light 0x7f04000f
 int color light_blue 0x7f04000a
 int color navy 0x7f04000b
+int color orange 0x7f04000d
 int color royal_blue 0x7f04000c
 int dimen activity_horizontal_margin 0x7f070000
 int dimen activity_vertical_margin 0x7f070001
@@ -221,6 +222,7 @@ int string unknown_activity_request_code 0x7f06005d
 int string volunteer 0x7f06002c
 int style AppBaseTheme 0x7f080000
 int style AppTheme 0x7f080001
+int style Title 0x7f080002
 int[] styleable MapAttrs { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d }
 int styleable MapAttrs_cameraBearing 1
 int styleable MapAttrs_cameraTargetLat 2
