@@ -15,8 +15,8 @@
 
     <Button
         android:id="@+id/get_location"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        style="@style/Button.Small"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_toLeftOf="@+id/title"
@@ -53,6 +53,7 @@
 
     <Button
         android:id="@+id/email"
+        style="@style/Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@android:id/list"
@@ -63,6 +64,7 @@
 
     <Button
         android:id="@+id/call"
+        style="@style/Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/email"

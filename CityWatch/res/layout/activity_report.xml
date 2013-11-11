@@ -30,7 +30,8 @@
         android:layout_below="@+id/get_location"
         android:layout_centerHorizontal="true"
         android:text="@string/dept_info"
-        android:textColor="@color/royal_blue"
+        android:textColor="@color/steelBlue"
+        android:layout_marginTop="10dp"
         android:textSize="24sp" />
 
     <Button
