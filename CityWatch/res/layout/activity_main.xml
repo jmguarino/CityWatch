@@ -17,38 +17,26 @@
     
     <Button
         android:id="@+id/report"
-        style="@style/Button"
+        style="@style/Button.Big"
         android:text="@string/report"
         android:onClick="openReport" />
     
     <Button
         android:id="@+id/kudos"
-        style="@style/Button"
+        style="@style/Button.Big"
         android:text="@string/kudos"
         android:onClick="openKudos" />
 
     <Button
         android:id="@+id/volunteer"
-        style="@style/Button"
+        style="@style/Button.Big"
         android:text="@string/volunteer"
         android:onClick="openVolunteer" />
 
     <Button
         android:id="@+id/listAll"
-        style="@style/Button"
+        style="@style/Button.Big"
         android:onClick="openAllAgencies"
         android:text="@string/listAll" />
-
-    <Button
-        android:id="@+id/getLocation"
-        style="@style/Button"
-        android:onClick="openLocation"
-        android:text="@string/getLocation" />
-    
-    <Button
-        android:id="@+id/settings"
-        style="@style/Button"
-        android:text="@string/action_settings"
-        android:onClick="openSettings" />
 
 </LinearLayout>

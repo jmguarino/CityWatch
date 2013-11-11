@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends Activity {
@@ -20,14 +21,26 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.action_settings:
+        	Intent settingsIntent = new Intent(this, Settings.class);
+            startActivity(settingsIntent);
+            return true;
+        case R.id.action_location:
+        	Intent locationIntent = new Intent(this, LocationActivity.class);
+            startActivity(locationIntent);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void openReport(View view) {
         Intent intent = new Intent(this, Report.class);
-        startActivity(intent);
-    }
-
-    public void openSettings(View view) {
-        Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 
@@ -45,10 +58,4 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, ListAllAgencies.class);
         startActivity(intent);
     }
-    
-    public void openLocation(View view) {
-        Intent intent = new Intent(this, LocationActivity.class);
-        startActivity(intent);
-    }
-
 }

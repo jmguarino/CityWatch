@@ -14,6 +14,7 @@
         android:id="@+id/title"
         style="@style/Title"
 		android:text="@string/title" />
+    
     <TextView
         android:id="@+id/sendTo"
         android:layout_width="wrap_content"
@@ -22,27 +23,49 @@
         android:layout_marginTop="19dp"
         android:textColor="#000000"
         android:textSize="16sp" />
-    <TextView
-        android:id="@+id/issue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginTop="19dp"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-    <EditText
-        android:id="@+id/comments"
+    
+    <LinearLayout
+        android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="19dp">
+        
+    	<TextView
+        	android:id="@+id/issue"
+        	android:layout_width="0dp"
+        	android:layout_weight="1"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="left"
+        	android:textColor="#000000"
+        	android:textSize="16sp" />
+    	
+    	<Button
+        	android:id="@+id/send_email"
+        	style="@style/Button.Small"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="right"
+        	android:text="@string/send"
+        	android:onClick="sendEmail" />
+    
+    </LinearLayout>
+    
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="top"
-        android:hint="@string/comments_hint" />
-    <Button
-        android:id="@+id/send_email"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="@string/send"
-        android:onClick="sendEmail" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#ffffff">
+        
+    	<EditText
+        	android:id="@+id/comments"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent"
+       		android:layout_margin="10dp"
+        	android:gravity="top"
+        	android:hint="@string/comments_hint" />
+    	
+    </FrameLayout>   
 
 </LinearLayout>
